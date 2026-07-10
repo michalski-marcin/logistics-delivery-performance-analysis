@@ -1,3 +1,7 @@
+-- =============================================
+-- DELIVERY EVENTS - RAW DATA CHECK
+-- =============================================
+
 -- Check if datetime conversion workss
 
 SELECT COUNT(*) AS invalid_dates
