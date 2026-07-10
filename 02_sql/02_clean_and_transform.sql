@@ -1,3 +1,7 @@
+-- =============================================
+-- DELIVERY EVENTS - RAW TO CLEAN TRANSFORMATION
+-- =============================================
+
 CREATE TABLE dbo.delivery_events_clean
 (
 	event_id nvarchar(50) PRIMARY KEY,
