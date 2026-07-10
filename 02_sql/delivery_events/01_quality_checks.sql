@@ -1,4 +1,4 @@
--- Check if datetime conversion works
+-- Check if datetime conversion workss
 
 SELECT COUNT(*) AS invalid_dates
 FROM dbo.delivery_events
