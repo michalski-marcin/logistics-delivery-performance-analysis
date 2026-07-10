@@ -1,3 +1,7 @@
+-- =============================================
+-- DELIVERY EVENTS - RAW DATA CHECK
+-- =============================================
+
 -- Check if datetime conversion works
 
 SELECT COUNT(*) AS invalid_dates
@@ -19,3 +23,4 @@ GROUP BY on_time_flag;
 
 SELECT COUNT(*) AS total_records
 FROM dbo.delivery_events;
+
