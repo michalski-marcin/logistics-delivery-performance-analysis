@@ -44,3 +44,7 @@ SELECT
 	location_city,
 	location_state
 FROM dbo.delivery_events;
+
+-- =============================================
+-- LOADS TABLE
+-- =============================================
