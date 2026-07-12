@@ -50,5 +50,38 @@ WHERE TRY_CONVERT(decimal(10, 2), revenue) IS NULL
    OR TRY_CONVERT(decimal(10, 2), fuel_surcharge) IS NULL;
       
 
+-- =============================================
+-- TRIPS TABLE
+-- =============================================
 
+-- Check for trip_id duplicates
+
+SELECT COUNT(trip_id), COUNT(DISTINCT trip_id)
+FROM trips;
+
+-- Check if conversion works
+
+SELECT COUNT(*) AS invalid
+FROM dbo.trips
+WHERE TRY_CONVERT(decimal(10, 2), actual_duration_hours) IS NULL
+   OR TRY_CONVERT(decimal(10, 2), fuel_gallons_used) IS NULL
+   OR TRY_CONVERT(decimal(10, 2), average_mpg) IS NULL
+   OR TRY_CONVERT(decimal(10, 2), idle_time_hours) IS NULL;
+
+
+-- =============================================
+-- ROUTES TABLE
+-- =============================================
+
+-- Check primary key duplicates
+
+SELECT COUNT(route_id), COUNT(DISTINCT route_id)
+FROM routes;
+
+
+-- Check conversion
+
+SELECT COUNT(*) AS invalid
+FROM dbo.routes
+WHERE TRY_CONVERT(decimal(10, 2), base_rate_per_mile) IS NULL;
 
