@@ -1,8 +1,9 @@
+-- RAW DATA CHECK
 -- =============================================
--- DELIVERY EVENTS - RAW DATA CHECK
+-- DELIVERY EVENTS TABLE 
 -- =============================================
 
--- Check if datetime conversion workss
+-- Check if datetime conversion works
 
 SELECT COUNT(*) AS invalid_dates
 FROM dbo.delivery_events
@@ -23,3 +24,31 @@ GROUP BY on_time_flag;
 
 SELECT COUNT(*) AS total_records
 FROM dbo.delivery_events;
+
+
+-- =============================================
+-- LOADS TABLE
+-- =============================================
+
+-- Check total loads
+
+SELECT COUNT(*) AS total_loads
+FROM dbo.loads;
+
+
+-- Check for load_id duplicates
+
+SELECT COUNT(load_id) AS all_loads, COUNT(DISTINCT load_id) 
+FROM dbo.loads;
+
+
+-- Check if decimal conversion works
+
+SELECT COUNT(*) AS invalid
+FROM dbo.loads
+WHERE TRY_CONVERT(decimal(10, 2), revenue) IS NULL
+   OR TRY_CONVERT(decimal(10, 2), fuel_surcharge) IS NULL;
+      
+
+
+

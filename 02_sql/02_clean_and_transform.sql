@@ -1,5 +1,6 @@
+-- RAW TO CLEAN TRANSFORMATION
 -- =============================================
--- DELIVERY EVENTS - RAW TO CLEAN TRANSFORMATION
+-- DELIVERY EVENTS 
 -- =============================================
 
 CREATE TABLE dbo.delivery_events_clean
@@ -45,6 +46,73 @@ SELECT
 	location_state
 FROM dbo.delivery_events;
 
+
 -- =============================================
--- LOADS TABLE
+-- LOADS
 -- =============================================
+
+CREATE TABLE dbo.loads_clean
+(
+    load_id nvarchar(50) PRIMARY KEY,
+    customer_id nvarchar(50),
+    route_id nvarchar(50),
+    load_date date,
+    load_type nvarchar(50),
+    weight_lbs int,
+    pieces int,
+    revenue decimal(10,2),
+    fuel_surcharge decimal(10,2),
+    accessorial_charges int,
+    load_status nvarchar(50),
+    booking_type nvarchar(50)
+);
+
+INSERT INTO dbo.loads_clean
+(
+    load_id,
+    customer_id,
+    route_id,
+    load_date,
+    load_type,
+    weight_lbs,
+    pieces,
+    revenue,
+    fuel_surcharge,
+    accessorial_charges,
+    load_status,
+    booking_type
+)
+
+SELECT
+    load_id,
+    customer_id,
+    route_id,
+    load_date,
+    load_type,
+    weight_lbs,
+    pieces,
+    TRY_CONVERT(decimal(10,2), revenue),
+    TRY_CONVERT(decimal(10,2), fuel_surcharge),
+    accessorial_charges,
+    load_status,
+    booking_type
+FROM dbo.loads;
+
+
+-- Compare RAW records with Clean table
+
+SELECT COUNT(*) AS raw
+FROM dbo.loads
+
+SELECT COUNT(*) AS clean
+FROM dbo.loads_clean;
+
+
+-- Check Data Types
+
+SELECT  column_name, data_type
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'loads_clean';
+
+
+
