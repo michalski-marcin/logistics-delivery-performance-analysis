@@ -183,7 +183,7 @@ Logistics-SQL-Analysis/
 │   ├── README.md
 │   ├── 01_quality_checks.sql
 │   ├── 02_clean_and_transform.sql
-│   └── 03_01_operational_kpis.sql
+│   └── 03_operational_kpis.sql
 │
 ├── 03_powerbi/
 │
