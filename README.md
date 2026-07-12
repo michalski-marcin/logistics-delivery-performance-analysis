@@ -169,12 +169,24 @@ Recommendations will be based on SQL analysis and Power BI findings.
 ## Repository Structure
 
 ```text
-logistics-delivery-performance-analysis/
-
+Logistics-SQL-Analysis/
+│
 ├── README.md
+│
 ├── 00_raw_data/
+│   └── README.md
+│
+├── 01_data_discovery/
+│   └── data_discovery.md
+│
 ├── 02_sql/
+│   ├── README.md
+│   ├── 01_quality_checks.sql
+│   ├── 02_clean_and_transform.sql
+│   └── 03_01_operational_kpis.sql
+│
 ├── 03_powerbi/
+│
 └── 04_screenshots/
 ```
 
