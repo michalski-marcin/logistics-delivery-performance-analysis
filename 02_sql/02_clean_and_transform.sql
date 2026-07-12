@@ -1,4 +1,5 @@
 -- RAW TO CLEAN TRANSFORMATION
+
 -- =============================================
 -- DELIVERY EVENTS 
 -- =============================================
@@ -45,6 +46,7 @@ SELECT
 	location_city,
 	location_state
 FROM dbo.delivery_events;
+
 
 
 -- =============================================
@@ -113,6 +115,7 @@ FROM dbo.loads_clean;
 SELECT  column_name, data_type
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'loads_clean';
+
 
 
 -- =============================================
@@ -184,6 +187,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'trips_clean'
 
 
+
 -- =============================================
 -- ROUTES TABLE
 -- =============================================
@@ -241,3 +245,102 @@ FROM dbo.routes_clean;
 SELECT column_name, data_type
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE table_name = 'routes_clean';
+
+
+
+-- =============================================
+-- FACILITIES TABLE
+-- =============================================
+
+CREATE TABLE dbo.facilities_clean
+(
+    facility_id nvarchar(50) PRIMARY KEY,
+    facility_name nvarchar(100),
+    facility_type nvarchar(50),
+    city nvarchar(50),
+    state nvarchar(10),
+    latitude decimal(10,4),
+    longitude decimal(10,4),
+    dock_doors tinyint,
+    operating_hours nvarchar(50)
+);
+
+INSERT INTO dbo.facilities_clean
+(
+    facility_id,
+    facility_name,
+    facility_type,
+    city,
+    state,
+    latitude,
+    longitude,
+    dock_doors,
+    operating_hours
+)
+SELECT
+    facility_id,
+    facility_name,
+    facility_type,
+    city,
+    state,
+    TRY_CONVERT(decimal(10,4), latitude),
+    TRY_CONVERT(decimal(10,4), longitude),
+    dock_doors,
+    operating_hours
+FROM dbo.facilities;
+
+
+-- Compare RAW with Clean tables
+
+SELECT COUNT(*) AS raw_facilities
+FROM dbo.facilities;
+
+SELECT COUNT(*) AS clean_facilities
+FROM dbo.facilities_clean;
+
+
+-- Check conversion
+
+SELECT COUNT(*) AS missing_coordinates
+FROM dbo.facilities_clean
+WHERE latitude IS NULL
+   OR longitude IS NULL;
+
+
+-- =============================================
+-- CUSTOMERS TABLE
+-- =============================================
+
+CREATE TABLE dbo.customers_clean
+(
+    customer_id nvarchar(50) PRIMARY KEY,
+    customer_name nvarchar(100),
+    customer_type nvarchar(50),
+    credit_terms_days int,
+    primary_freight_type nvarchar(50),
+    account_status nvarchar(50),
+    contract_start_date date,
+    annual_revenue_potential int
+);
+
+INSERT INTO dbo.customers_clean
+(
+    customer_id,
+    customer_name,
+    customer_type,
+    credit_terms_days,
+    primary_freight_type,
+    account_status,
+    contract_start_date,
+    annual_revenue_potential
+)
+SELECT
+    customer_id,
+    customer_name,
+    customer_type,
+    credit_terms_days,
+    primary_freight_type,
+    account_status,
+    contract_start_date,
+    annual_revenue_potential
+FROM dbo.customers;
